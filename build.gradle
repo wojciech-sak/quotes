@@ -1,0 +1,42 @@
+plugins {
+   id 'org.springframework.boot' version '2.3.1.RELEASE'
+   id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+   id 'java'
+   id "com.palantir.docker" version "0.22.1"
+}
+
+group = 'com.kodilla'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+def dockerHubName = 'wojciechsak'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'com.spotify:dockerfile-maven-plugin:1.4.13'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'org.postgresql:postgresql'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+docker{
+    name "${dockerHubName}" + "/" + "${project.name}:${project.version}"
+    files 'app.jar'
+}
+
+test {
+    useJUnitPlatform()
+}
