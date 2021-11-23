@@ -2,4 +2,5 @@
 
 docker build --build-arg JAR_FILE=build/libs/quotes-0.0.1-SNAPSHOT.jar -t wojciechsak/quotesapp .
 docker run -d -p 8090:8090 --network quotes-network docker.io/wojciechsak/quotesapp
+docker run -p 8090:8090 --network quotes-network docker.io/wojciechsak/quotesapp
 

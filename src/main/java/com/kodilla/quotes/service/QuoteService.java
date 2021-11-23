@@ -4,6 +4,7 @@ import com.kodilla.quotes.model.Quote;
 import com.kodilla.quotes.repository.QuoteRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -19,5 +20,9 @@ public class QuoteService {
 
     public Quote getRandomQuote() {
         return quoteRepository.findById((long) random.nextInt(MAX_QUOTES) + 1).orElse(null);
+    }
+
+    public Optional<Quote> getQuoteById(Long id) {
+        return quoteRepository.findById(id);
     }
 }
