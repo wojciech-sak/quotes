@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kodilla-quotes
+  labels:
+    app: kodilla-quotes
+spec:
+  selector:
+    app: kodilla-quotes
+    type: ClusterIP
+  ports:
+    - name: http
+      port: 8080

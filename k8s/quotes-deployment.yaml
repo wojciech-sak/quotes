@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kodilla-quotes
+  labels:
+    app: kodilla-quotes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kodilla-quotes
+  template:
+    metadata:
+      name: kodilla-quotes
+      labels:
+        app: kodilla-quotes
+    spec:
+      containers:
+        - name: kodilla-quotes
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: postgres_user
+                  name: quotes-postgres-config
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: quotes-postgres-secret
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: postgres_host
+                  name: quotes-hostname-config
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  key: postgres_db
+                  name: quotes-postgres-config
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: postgres_port
+                  name: quotes-postgres-config
+          image: wojciechsak/quotesapp
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 3

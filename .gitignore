@@ -1,4 +1,7 @@
 HELP.md
+/k8s/archived/*.*
+/k8s/example/*.*
+/k8s/memory-app-mine/*.*
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
